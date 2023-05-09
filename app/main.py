@@ -2,10 +2,11 @@
 """
 import os
 
+import uvicorn
 from dotenv import find_dotenv, load_dotenv
 from fastapi import FastAPI
 from motor.motor_asyncio import AsyncIOMotorClient
-import uvicorn
+from routers.cars import cars
 
 app = FastAPI()
 load_dotenv(find_dotenv())
@@ -35,6 +36,8 @@ async def root():
         dict[str, str]: A dictionary containing strings
     """
     return {"message": "Hello World"}
+
+app.include_router(cars)
 
 
 if __name__ == "__main__":
