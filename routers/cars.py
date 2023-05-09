@@ -1,6 +1,6 @@
 """The cars router file"""
 from fastapi import APIRouter, Body, Request
-
+from fastapi.encoders import jsonable_encoder
 from models.car_model import CarBase
 
 cars = APIRouter(prefix='/cars', tags=['Cars'])
@@ -18,4 +18,4 @@ async def list_cars():
 
 @cars.post("/", response_description="Create a new car")
 async def create_car(request: Request, car: CarBase = Body(...)):
-    pass
+    car = jsonable_encoder(car)
