@@ -26,3 +26,23 @@ class Authorization():
     def verify_password(self, _plain_password: str, _hashed_password: str) -> bool:
         """Verifies the password"""
         return self.pwd_context.verify(_plain_password, _hashed_password)
+
+    def encode_token(self, _user_id):
+        """The function that encodes the token.
+
+        It takes the user id as a parameter and returns the token.
+
+        Returns:
+            str: The token.
+        """
+        payload = {
+            "exp": datetime.utcnow() + timedelta(days=0, minutes=35),
+            "iat": datetime.utcnow(),
+            "sub":  _user_id
+        }
+
+        return jwt.encode(
+            payload,
+            self.secret,
+            algorithm="HS256"
+        )
