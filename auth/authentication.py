@@ -3,11 +3,12 @@ from datetime import datetime, timedelta
 from typing import Optional
 
 import jwt
-from fastapi import HTTPException, Security
+from fastapi import HTTPException, Security, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from passlib.context import CryptContext
 import os
 from dotenv import find_dotenv, load_dotenv
+from typing import Optional
 
 
 load_dotenv(find_dotenv())
@@ -46,3 +47,28 @@ class Authorization():
             self.secret,
             algorithm="HS256"
         )
+
+    def decode_token(self, _token: str) -> Optional[str]:
+        """The function that decodes the token.
+
+        It takes the token as a parameter and returns the user id.
+
+        Args:
+            token (str): The token.
+
+        Returns:
+            Optional[str]: The user id.
+        """
+        try:
+            payload = jwt.decode(_token, self.secret, algorithms=["HS256"])
+            return payload["sub"]
+        except jwt.ExpiredSignatureError:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Signature expired"
+            )
+        except jwt.InvalidTokenError as e:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Invalid token"
+            )
