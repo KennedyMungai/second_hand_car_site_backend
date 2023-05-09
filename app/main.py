@@ -10,6 +10,7 @@ from motor.motor_asyncio import AsyncIOMotorClient
 
 from routers.cars import cars
 from models.car_model import CarBase
+from routers.users import users_router
 
 app = FastAPI()
 load_dotenv(find_dotenv())
