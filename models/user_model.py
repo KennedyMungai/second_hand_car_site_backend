@@ -29,3 +29,14 @@ class MongoBaseModel(BaseModel):
 
     class Config:
         json_encoders = {ObjectId: str}
+
+
+class Role(str, Enum):
+    """A class that defines the different user roles
+
+    Args:
+        str (_type_): Strings
+        Enum (_type_): Enums
+    """
+    SALESPERSON = "SALESPERSON"
+    ADMIN = "ADMIN"
