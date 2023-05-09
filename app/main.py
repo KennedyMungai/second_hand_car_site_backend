@@ -1,7 +1,9 @@
 """The entrypoint to the backend application
 """
-from fastapi import FastAPI
+import os
 
+from dotenv import find_dotenv, load_dotenv
+from fastapi import FastAPI
 
 app = FastAPI()
 
