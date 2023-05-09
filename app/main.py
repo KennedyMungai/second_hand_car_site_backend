@@ -8,8 +8,8 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
 
-from routers.cars import cars_router
 from models.car_model import CarBase
+from routers.cars import cars_router
 from routers.users import users_router
 
 app = FastAPI()
