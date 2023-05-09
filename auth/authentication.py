@@ -1,15 +1,13 @@
 """The file with the authentication logic"""
+import os
 from datetime import datetime, timedelta
 from typing import Optional
 
 import jwt
+from dotenv import find_dotenv, load_dotenv
 from fastapi import HTTPException, Security, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from passlib.context import CryptContext
-import os
-from dotenv import find_dotenv, load_dotenv
-from typing import Optional
-
 
 load_dotenv(find_dotenv())
 
