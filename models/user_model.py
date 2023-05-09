@@ -53,22 +53,21 @@ class UserBase(MongoBaseModel):
     password: str = Field(...)
     role: Role
 
+    @validator("email")
+    def valid_email(self, cls, v):
+        """Wrote a simple email validator class
 
-@validator("email")
-def valid_email(cls, v):
-    """Wrote a simple email validator class
+        Args:
+            v (_type_): _description_
 
-    Args:
-        v (_type_): _description_
+        Raises:
+            EmailNotValidError: Email not valid exception
 
-    Raises:
-        EmailNotValidError: Email not valid exception
-
-    Returns:
-        email: The valid email
-    """
-    try:
-        email = validate_email(v).email
-        return email
-    except:
-        raise EmailNotValidError()
+        Returns:
+            email: The valid email
+        """
+        try:
+            email = validate_email(v).email
+            return email
+        except:
+            raise EmailNotValidError
