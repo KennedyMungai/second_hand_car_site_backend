@@ -7,10 +7,10 @@ from fastapi.responses import JSONResponse
 
 from models.car_model import CarBase, CarDB, CarUpdate
 
-cars = APIRouter(prefix='/cars', tags=['Cars'])
+cars_router = APIRouter(prefix='/cars', tags=['Cars'])
 
 
-@cars.get("/", response_description="List all cars")
+@cars_router.get("/", response_description="List all cars")
 async def list_all_cars(
     request: Request,
     min_price: int = 0,
@@ -44,7 +44,7 @@ async def list_all_cars(
     return results
 
 
-@cars.post("/", response_description="Create a new car")
+@cars_router.post("/", response_description="Create a new car")
 async def create_car(request: Request, car: CarBase = Body(...)):
     """This is an endpoint that creates a car
 
@@ -62,7 +62,7 @@ async def create_car(request: Request, car: CarBase = Body(...)):
     return JSONResponse(status_code=status.HTTP_201_CREATED, content=created_car)
 
 
-@cars.get("/{car_id}", response_description="Get a car by id")
+@cars_router.get("/{car_id}", response_description="Get a car by id")
 async def show_car(car_id: str, request: Request):
     """Returned a single car from the database based on its ID
 
@@ -80,7 +80,7 @@ async def show_car(car_id: str, request: Request):
                         detail=f"Car with {car_id} not found")
 
 
-@cars.patch("/{car_id}", response_description="Update a car by id")
+@cars_router.patch("/{car_id}", response_description="Update a car by id")
 async def update_task(
     car_id: str,
     request: Request,
@@ -109,7 +109,7 @@ async def update_task(
                         detail=f"Car with {car_id} not found")
 
 
-@cars.delete("/{car_id}", response_description="Delete a car by id")
+@cars_router.delete("/{car_id}", response_description="Delete a car by id")
 async def delete_car(car_id: str, request: Request):
     """The delete car endpoint
 

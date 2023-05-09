@@ -8,7 +8,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
 
-from routers.cars import cars
+from routers.cars import cars_router
 from models.car_model import CarBase
 from routers.users import users_router
 
@@ -54,7 +54,7 @@ async def root():
     """
     return {"message": "Hello World"}
 
-app.include_router(cars)
+app.include_router(cars_router)
 app.include_router(users_router)
 
 
