@@ -20,6 +20,11 @@ class PyObjectId(ObjectId):
 
 
 class MongoBaseModel(BaseModel):
+    """The Base Model using the mongo if
+
+    Args:
+        BaseModel (Pydantic): A pydantic base model
+    """
     id: PyObjectId = Field(default_factory=PyObjectId, alias="_id")
 
     class Config:
