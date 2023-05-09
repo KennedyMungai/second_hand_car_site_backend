@@ -72,3 +72,16 @@ class Authorization():
                 status_code=status.HTTP_401_UNAUTHORIZED,
                 detail="Invalid token"
             )
+
+    def auth_wrapper(self, auth: HTTPAuthorizationCredentials = Security(security)):
+        """The function that wraps the authorization logic.
+
+        It takes the authorization credentials as a parameter and returns the user id.
+
+        Args:
+            auth (HTTPAuthorizationCredentials): The authorization credentials.
+
+        Returns:
+            Optional[str]: The user id.
+        """
+        return self.decode_token(auth.credentials)
