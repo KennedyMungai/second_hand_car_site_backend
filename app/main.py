@@ -13,6 +13,13 @@ DB_NAME = os.environ.get("DB_NAME")
 DB_URL = os.environ.get("DB_URL")
 
 
+@app.on_event("startup")
+async def startup_db_client():
+    "Defined the db connection code on start up"
+    app.mongodb_client = AsyncIOMotorClient(DB_URL)
+    app.mongodb = app.mongodb_client[DB_NAME]
+
+
 @app.get("/")
 async def root():
     """The root endpoint
