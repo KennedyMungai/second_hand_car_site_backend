@@ -55,6 +55,7 @@ async def root():
     return {"message": "Hello World"}
 
 app.include_router(cars)
+app.include_router(users_router)
 
 
 if __name__ == "__main__":
