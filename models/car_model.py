@@ -31,3 +31,17 @@ class MongoBaseModel(BaseModel):
         """The configuration subclass for MongoBaseModel
         """
         json_encoders = {ObjectId: str}
+
+
+class CarBase(MongoBaseModel):
+    """The base model for the car
+
+    Args:
+        MongoBaseModel (MongoBaseModel): The base model for the mongo
+    """
+    brand: str = Field(..., min_length=3)
+    make: str = Field(..., min_length=3)
+    year: int = Field(...)
+    price: int = Field(...)
+    km: int = Field(...)
+    cm3: int = Field(...)
