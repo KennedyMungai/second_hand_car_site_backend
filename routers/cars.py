@@ -37,6 +37,15 @@ async def create_car(request: Request, car: CarBase = Body(...)):
 
 @cars.get("/{car_id}", response_description="Get a car by id")
 async def show_car(car_id: str, request: Request):
+    """Returned a single car from the database based on its ID
+
+    Args:
+        car_id (str): The Id of the car
+        request (Request): The request object
+
+    Raises:
+        HTTPException: Raises a 404 not found if not found
+    """
     if (car := await request.app.mongodb["cars1"].find_one({"_id": car_id})) is not None:
         return CarDB(**car)
 
