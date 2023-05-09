@@ -22,3 +22,7 @@ class Authorization():
     def get_password_hash(self, _password: str) -> str:
         """Returns the hashed password"""
         return self.pwd_context.hash(_password)
+
+    def verify_password(self, _plain_password: str, _hashed_password: str) -> bool:
+        """Verifies the password"""
+        return self.pwd_context.verify(_plain_password, _hashed_password)
