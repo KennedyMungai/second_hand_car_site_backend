@@ -1,8 +1,8 @@
 """The cars router file"""
-from fastapi import APIRouter, Body, Request, status
+from fastapi import APIRouter, Body, Request, status, HTTPException
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
-from models.car_model import CarBase
+from models.car_model import CarBase, CarDB
 
 cars = APIRouter(prefix='/cars', tags=['Cars'])
 
@@ -33,3 +33,12 @@ async def create_car(request: Request, car: CarBase = Body(...)):
     created_car = await request.app.mongodb["cars1"].find_one({"_id": new_car.inserted_id})
 
     return JSONResponse(status_code=status.HTTP_201_CREATED, content=created_car)
+
+
+@cars.get("/{car_id}", response_description="Get a car by id")
+async def show_car(car_id: str, request: Request):
+    if (car := await request.app.mongodb["cars1"].find_one({"_id": car_id})) is not None:
+        return CarDB(**car)
+
+    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                        detail=f"Car with {car_id} not found")
