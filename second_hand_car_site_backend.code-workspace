@@ -12,7 +12,8 @@
 		"cSpell.words": [
 			"bson",
 			"dotenv",
-			"jsonable"
+			"jsonable",
+			"passlib"
 		]
 	}
 }
