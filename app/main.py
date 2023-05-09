@@ -28,7 +28,7 @@ async def shutdown_db_client():
     app.mongodb_client.close()
 
 
-@app.get("/")
+@app.get("/", tags=['Home'])
 async def root():
     """The root endpoint
 
