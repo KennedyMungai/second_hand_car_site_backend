@@ -17,6 +17,11 @@ load_dotenv(find_dotenv())
 DB_NAME = os.environ.get("DB_NAME")
 DB_URL = os.environ.get("DB_URL")
 
+origins = [
+    'http://localhost',
+    'http://localhost:3000',
+]
+
 
 @app.on_event("startup")
 async def startup_db_client():
