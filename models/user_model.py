@@ -92,4 +92,4 @@ class CurrentUser(BaseModel):
     """
     email: str = EmailStr(...)
     username: str = Field(...)
-    role: str = Field(...add())
+    role: str = Field(...)
