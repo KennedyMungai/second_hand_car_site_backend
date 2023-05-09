@@ -1,10 +1,11 @@
 """The cars router file"""
-from fastapi import APIRouter, Body, Request, status, HTTPException
+from typing import List, Optional
+
+from fastapi import APIRouter, Body, HTTPException, Request, status
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
-from models.car_model import CarBase, CarDB
-from typing import Optional, List
 
+from models.car_model import CarBase, CarDB
 
 cars = APIRouter(prefix='/cars', tags=['Cars'])
 
