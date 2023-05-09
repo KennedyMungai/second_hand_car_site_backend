@@ -5,6 +5,7 @@ import os
 from dotenv import find_dotenv, load_dotenv
 from fastapi import FastAPI
 from motor.motor_asyncio import AsyncIOMotorClient
+import uvicorn
 
 app = FastAPI()
 load_dotenv(find_dotenv())
@@ -34,3 +35,7 @@ async def root():
         dict[str, str]: A dictionary containing strings
     """
     return {"message": "Hello World"}
+
+
+if __name__ == "__main__":
+    uvicorn.run("main:app", host="0000000", port=8000, reload=True)
