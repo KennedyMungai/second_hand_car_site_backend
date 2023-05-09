@@ -1,7 +1,7 @@
 """The cars router file"""
 from fastapi import APIRouter
 
-cars = APIRouter(prefix='cars', tags=['cars'])
+cars = APIRouter(prefix='/cars', tags=['cars'])
 
 
 @cars.get("/", response_description="List all cars")
