@@ -18,3 +18,7 @@ class Authorization():
     security = HTTPBearer()
     pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
     secret = os.environ.get("SECRET_KEY")
+
+    def get_password_hash(self, _password: str) -> str:
+        """Returns the hashed password"""
+        return self.pwd_context.hash(_password)
