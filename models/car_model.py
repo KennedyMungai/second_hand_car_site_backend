@@ -56,3 +56,12 @@ class CarUpdate(MongoBaseModel):
         MongoBaseModel (The Base model for the mongodb): Mongodb base model
     """
     price: Optional[int] = None
+
+
+class CarDB(CarBase):
+    """The car database model
+
+    Args:
+        CarBase (CarBase): The car base model
+    """
+    pass
