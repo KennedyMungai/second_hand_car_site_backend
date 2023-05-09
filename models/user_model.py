@@ -81,3 +81,15 @@ class LoginBase(BaseModel):
     """
     email: str = EmailStr(...)
     password: str = Field(...)
+
+
+class CurrentUser(BaseModel):
+    """The template for the current user data
+
+    Args:
+        BaseModel (Pydantic data): The base pydantic data
+
+    """
+    email: str = EmailStr(...)
+    username: str = Field(...)
+    role: str = Field(...add())
