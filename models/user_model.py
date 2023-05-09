@@ -71,3 +71,13 @@ class UserBase(MongoBaseModel):
             return email
         except:
             raise EmailNotValidError
+
+
+class LoginBase(BaseModel):
+    """The base class for the login data
+
+    Args:
+        BaseModel (Pydantic data): The base pydantic data
+    """
+    email: str = EmailStr(...)
+    password: str = Field(...)
