@@ -1,4 +1,6 @@
 """The model file for the car"""
+from typing import Optional
+
 from bson import ObjectId
 from pydantic import BaseModel, Field
 
@@ -45,3 +47,12 @@ class CarBase(MongoBaseModel):
     price: int = Field(...)
     km: int = Field(...)
     cm3: int = Field(...)
+
+
+class CarUpdate(MongoBaseModel):
+    """Defined the car update class
+
+    Args:
+        MongoBaseModel (The Base model for the mongodb): Mongodb base model
+    """
+    price: Optional[int] = None
