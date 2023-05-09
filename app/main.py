@@ -4,6 +4,7 @@ import os
 
 from dotenv import find_dotenv, load_dotenv
 from fastapi import FastAPI
+from motor.motor_asyncio import AsyncIOMotorClient
 
 app = FastAPI()
 load_dotenv(find_dotenv())
