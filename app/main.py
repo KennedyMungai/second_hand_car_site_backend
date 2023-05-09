@@ -10,7 +10,7 @@ from fastapi.responses import JSONResponse
 from motor.motor_asyncio import AsyncIOMotorClient
 from routers.cars import cars
 
-from models.car_model import CarBase
+# from models.car_model import CarBase
 
 app = FastAPI()
 load_dotenv(find_dotenv())
