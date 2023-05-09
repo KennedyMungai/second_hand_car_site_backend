@@ -40,3 +40,15 @@ class Role(str, Enum):
     """
     SALESPERSON = "SALESPERSON"
     ADMIN = "ADMIN"
+
+
+class UserBase(MongoBaseModel):
+    """The base template for user data
+
+    Args:
+        MongoBaseModel (Mongo data): The base mongo data
+    """
+    username: str = Field(..., min_length=3, max_length=15)
+    email: str = Field(...)
+    password: str = Field(...)
+    role: Role
