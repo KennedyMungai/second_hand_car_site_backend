@@ -5,8 +5,6 @@ import os
 import uvicorn
 from dotenv import find_dotenv, load_dotenv
 from fastapi import FastAPI
-from fastapi.encoders import jsonable_encoder
-from fastapi.responses import JSONResponse
 from motor.motor_asyncio import AsyncIOMotorClient
 
 from routers.cars import cars
