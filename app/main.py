@@ -45,4 +45,4 @@ app.include_router(cars)
 
 
 if __name__ == "__main__":
-    uvicorn.run("main:app", host="0000000", port=8000, reload=True)
+    uvicorn.run("main:app", reload=True)
