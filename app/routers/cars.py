@@ -1,5 +1,7 @@
 """The cars router file"""
-from fastapi import APIRouter
+from fastapi import APIRouter, Body, Request
+
+from models.car_model import CarBase
 
 cars = APIRouter(prefix='/cars', tags=['Cars'])
 
@@ -12,3 +14,8 @@ async def list_cars():
         dict[str, str]: A simple placeholder message
     """
     return {"data": "All cars will go here"}
+
+
+@cars.post("/", response_description="Create a new car")
+async def create_car(request: Request, car: CarBase = Body(...)):
+    pass
