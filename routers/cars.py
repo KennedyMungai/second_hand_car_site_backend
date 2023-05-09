@@ -17,7 +17,18 @@ async def list_all_cars(
     max_price: int = 100000,
     brand: Optional[str] = None,
 ) -> List[CarDB]:
+    """Lists all the cars in the database
 
+    Args:
+        request (Request): The request object
+        min_price (int, optional): The minimum price. Defaults to 0.
+        max_price (int, optional): The maximum price. Defaults to 100000.
+        brand (Optional[str], optional): The brand of the car. Defaults to None.
+
+    Returns:
+        List[CarDB]: A list of cars in the database.
+
+    """
     query = {"price": {"$lt": max_price, "$gt": min_price}}
     if brand:
         query["brand"] = brand
