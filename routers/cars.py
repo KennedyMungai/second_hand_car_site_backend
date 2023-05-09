@@ -16,6 +16,7 @@ async def list_all_cars(
     min_price: int = 0,
     max_price: int = 100000,
     brand: Optional[str] = None,
+    page: int = 1
 ) -> List[CarDB]:
     """Lists all the cars in the database
 
@@ -29,12 +30,14 @@ async def list_all_cars(
         List[CarDB]: A list of cars in the database.
 
     """
+    RESULTS_PER_PAGE = 25
+    skip = (page - 1)*RESULTS_PER_PAGE
     query = {"price": {"$lt": max_price, "$gt": min_price}}
     if brand:
         query["brand"] = brand
 
     full_query = request.app.mongodb['cars1'].find(query).sort(
-        "_id", -1)
+        "_id", -1).skip(skip).limit(RESULTS_PER_PAGE)
 
     results = [CarDB(**raw_car) async for raw_car in full_query]
 
