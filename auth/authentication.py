@@ -14,7 +14,7 @@ from typing import Optional
 load_dotenv(find_dotenv())
 
 
-class Authorization():
+class AuthHandler():
     """Class handles authorization"""
     security = HTTPBearer()
     pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
