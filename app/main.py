@@ -22,7 +22,7 @@ async def startup_db_client():
 
 @app.on_event("shutdown")
 async def shutdown_db_client():
-    """The logic to shutdown th emongodb connection"""
+    """The logic to shutdown the mongodb connection"""
     app.mongodb_client.close()
 
 
