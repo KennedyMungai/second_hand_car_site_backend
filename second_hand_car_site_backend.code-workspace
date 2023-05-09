@@ -11,7 +11,8 @@
 		"python.formatting.provider": "none",
 		"cSpell.words": [
 			"bson",
-			"dotenv"
+			"dotenv",
+			"jsonable"
 		]
 	}
 }
