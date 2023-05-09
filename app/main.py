@@ -4,9 +4,13 @@ import os
 
 import uvicorn
 from dotenv import find_dotenv, load_dotenv
-from fastapi import FastAPI
+from fastapi import APIRouter, Body, FastAPI, Request, status
+from fastapi.encoders import jsonable_encoder
+from fastapi.responses import JSONResponse
 from motor.motor_asyncio import AsyncIOMotorClient
 from routers.cars import cars
+
+from models.car_model import CarBase
 
 app = FastAPI()
 load_dotenv(find_dotenv())
