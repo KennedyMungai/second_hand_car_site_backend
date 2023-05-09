@@ -23,4 +23,6 @@ class MongoBaseModel(BaseModel):
     id: PyObjectId = Field(default_factory=PyObjectId, alias="_id")
 
     class Config:
+        """The configuration subclass for MongoBaseModel
+        """
         json_encoders = {ObjectId: str}
