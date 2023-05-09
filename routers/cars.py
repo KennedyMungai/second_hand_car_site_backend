@@ -3,18 +3,34 @@ from fastapi import APIRouter, Body, Request, status, HTTPException
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
 from models.car_model import CarBase, CarDB
+from typing import Optional, List
+
 
 cars = APIRouter(prefix='/cars', tags=['Cars'])
 
 
 @cars.get("/", response_description="List all cars")
-async def list_cars():
+async def list_cars(
+        request: Request,
+        min_price: int = 0,
+        max_price: int = 100000,
+        brand: Optional[str] = None
+) -> List[CarDB]:
     """An endpoint to list all cars in the database
 
     Returns:
-        dict[str, str]: A simple placeholder message
+        List[CarDB]: A list of all cars
     """
-    return {"data": "All cars will go here"}
+    query = {"price": {"$lt": max_price, "$gt": min_price}}
+
+    if brand:
+        query["brand"] = brand
+
+    full_query = request.app.mongodb["cars1"].find(query).sort("_id", 1)
+
+    results = [CarDB(**raw_car) async for raw_car in full_query]
+
+    return results
 
 
 @cars.post("/", response_description="Create a new car")
