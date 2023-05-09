@@ -14,6 +14,7 @@ load_dotenv(find_dotenv())
 
 
 class Authorization():
+    """Class handles authorization"""
     security = HTTPBearer()
     pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
     secret = os.environ.get("SECRET_KEY")
