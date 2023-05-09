@@ -107,3 +107,26 @@ async def update_task(
     return CarDB(**car)
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                         detail=f"Car with {car_id} not found")
+
+
+@cars.delete("/{car_id}", response_description="Delete a car by id")
+async def delete_car(car_id: str, request: Request):
+    """The delete car endpoint
+
+    Args:
+        car_id (str): The id of the car
+        request (Request): The request object
+
+    Raises:
+        HTTPException: The exception defined in the library
+
+    Returns:
+        JSONResponse: The response is in JSON format
+    """
+    delete_result = await request.app.mongodb["cars1"].delete_one({"_id": car_id})
+
+    if delete_result.deleted_count == 1:
+        return JSONResponse(status_code=status.HTTP_204_NO_CONTENT)
+
+    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                        detail=f"Car with {car_id} not found")
