@@ -5,7 +5,7 @@ from fastapi import APIRouter, Body, HTTPException, Request, status
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
 
-from models.car_model import CarBase, CarDB
+from models.car_model import CarBase, CarDB, CarUpdate
 
 cars = APIRouter(prefix='/cars', tags=['Cars'])
 
@@ -76,5 +76,34 @@ async def show_car(car_id: str, request: Request):
     if (car := await request.app.mongodb["cars1"].find_one({"_id": car_id})) is not None:
         return CarDB(**car)
 
+    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                        detail=f"Car with {car_id} not found")
+
+
+@cars.patch("/{car_id}", response_description="Update a car by id")
+async def update_task(
+    car_id: str,
+    request: Request,
+    CarUpdate=Body(...)
+):
+    """The car update endpoint
+
+    Args:
+        car_id (str): The id of the car record
+        request (Request): The request object
+        CarUpdate (_type_, optional): The template for updating the car data. Defaults to Body(...).
+
+    Raises:
+        HTTPException: Raises a 404 not found if not found
+
+    Returns:
+        CarDb: The info on the updated car using the appropriate template
+    """
+    await request.app.mongodb["cars1"].update_one({"_id": car_id}, {"$set": car.dict(exclude_unset=True)})
+
+    if (car := await request.app.mongodb["cars1"].find_one({"_id": car_id})) is not None:
+        return CarDB(**car)
+
+    return CarDB(**car)
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                         detail=f"Car with {car_id} not found")
