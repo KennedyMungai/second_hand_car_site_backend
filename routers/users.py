@@ -37,7 +37,7 @@ async def register_user(_request: Request, _new_user: UserBase = Body(...)) -> U
 
 @users_router.post("/login", response_description="User Login")
 async def login(_request: Request, _login_user: LoginBase = Body(...)) -> str:
-    """The logn endpoint for the user
+    """The login endpoint for the user
 
     Args:
         _request (Request): The request object
@@ -55,6 +55,6 @@ async def login(_request: Request, _login_user: LoginBase = Body(...)) -> str:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid Credentials")
 
-    token = auth_handler.encode_token(user["_id"])
+    token = auth_handler.encode_token(_user["_id"])
     response = JSONResponse(content={"token": token})
     return response
