@@ -58,3 +58,21 @@ async def login(_request: Request, _login_user: LoginBase = Body(...)) -> str:
     token = auth_handler.encode_token(_user["_id"])
     response = JSONResponse(content={"token": token})
     return response
+
+
+@users_router.get("/me", response_description="Logged in User Data")
+async def me(_request: Request, _user_id: Depends(auth_handler.auth_wrapper)):
+    """Returned information on the currently logged in user
+
+    Args:
+        _request (Request): The request object
+        _user_id (Depends): The id of the logged in user
+
+    Returns:
+        _type_: A response in JSON format
+    """
+    _current_user = await _request.app.mongodb["users"].find_one({"_id": _user_id})
+    _result = _current_user(**_current_user).dict()
+    _result["id"] = _user_id
+
+    return JSONResponse(status_code=status.HTTP_200_OK, content=_result)
