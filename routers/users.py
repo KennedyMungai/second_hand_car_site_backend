@@ -33,3 +33,28 @@ async def register_user(_request: Request, _new_user: UserBase = Body(...)) -> U
     created_user = await _request.app.mongodb["user"].find_one({"_id": user.inserted_id})
 
     return JSONResponse(status_code=status.HTTP_201_CREATED, content=created_user)
+
+
+@users_router.post("/login", response_description="User Login")
+async def login(_request: Request, _login_user: LoginBase = Body(...)) -> str:
+    """The logn endpoint for the user
+
+    Args:
+        _request (Request): The request object
+        _login_user (LoginBase, optional): The login data. Defaults to Body(...).
+
+    Raises:
+        HTTPException: An exception thrown if the user is not found or has invalid credentials
+
+    Returns:
+        str: The response
+    """
+    _user = await _request.app.mongodb["user"].find_one({"email": _login_user.email})
+
+    if (_user is None) or (not auth_handler.verify_password(_login_user.password, _user["password"])):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid Credentials")
+
+    token = auth_handler.encode_token(user["_id"])
+    response = JSONResponse(content={"token": token})
+    return response
