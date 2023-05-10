@@ -18,8 +18,9 @@ async def list_all_cars(
     min_price: int = 0,
     max_price: int = 100000,
     brand: Optional[str] = None,
-    page: int = 1
-) -> List[CarDB]:
+    page: int = 1,
+    _user_id: Depends(auth_handler.auth_wrapper) = None
+ -> List[CarDB]:
     """Lists all the cars in the database
 
     Args:
