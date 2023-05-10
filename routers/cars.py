@@ -9,6 +9,7 @@ from auth.authentication import AuthHandler
 from models.car_model import CarBase, CarDB, CarUpdate
 
 cars_router = APIRouter(prefix='/cars', tags=['Cars'])
+auth_handler = AuthHandler()
 
 
 @cars_router.get("/", response_description="List all cars")
