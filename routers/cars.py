@@ -87,9 +87,10 @@ async def show_car(car_id: str, request: Request):
 
 @cars_router.patch("/{car_id}", response_description="Update a car by id")
 async def update_task(
-    car_id: str,
-    request: Request,
-    CarUpdate=Body(...)
+    _car_id: str,
+    _request: Request,
+    CarUpdate=Body(...),
+    _user_id: Depends(auth_handler.auth_wrapper)
 ):
     """The car update endpoint
 
@@ -104,14 +105,19 @@ async def update_task(
     Returns:
         CarDb: The info on the updated car using the appropriate template
     """
-    await request.app.mongodb["cars1"].update_one({"_id": car_id}, {"$set": car.dict(exclude_unset=True)})
+    _user = await _request.app.mongodb["users"].find_one({"_id": _user_id})
+    _find_car = await _request.app.mongodb["cars1"].find_one({"_id": _car_id})
+    
+    if(_find_car["owner"] != _user_id) and _user["role"] != "ADMIN":
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,
+                            detail=f"Only the owner of the car or an admin can update it")
+    
+    await _request.app.mongodb["cars1"].update_one({"_id": _car_id}, {"$set": CarUpdate.dict(exclude_unset=True)})
 
-    if (car := await request.app.mongodb["cars1"].find_one({"_id": car_id})) is not None:
+    if(car := await _request.app.mongodb["cars1"].find_one({"_id": _car_id})) is not None:
         return CarDB(**car)
-
-    return CarDB(**car)
-    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-                        detail=f"Car with {car_id} not found")
+    
+    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail=f"Car with {_car_id} not found")
 
 
 @cars_router.delete("/{car_id}", response_description="Delete a car by id")
