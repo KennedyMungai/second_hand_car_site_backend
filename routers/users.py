@@ -11,7 +11,7 @@ auth_handler = AuthHandler()
 
 
 @users_router.post("/register", response_description="User Registration")
-async def register_user(request: Request, _new_user: UserBase = Body(...)) -> UserBase:
+async def register_user(_request: Request, _new_user: UserBase = Body(...)) -> UserBase:
     """An endpoint to register users
 
     Args:
